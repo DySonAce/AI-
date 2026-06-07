@@ -28,8 +28,8 @@ export default function App() {
   // Sidebar Tabs (Removed "python" as requested, we'll embed the guide in the primary screen as textual output)
   const [activeTab, setActiveTab] = useState<"console" | "settings" | "hardware">("console");
   
-  // Theme Color Scheme Selection (Cyan, Gold, Pink, Green, Purple)
-  const [themeColor, setThemeColor] = useState<"cyan" | "gold" | "pink" | "green" | "purple">("cyan");
+  // Theme Color Scheme Selection (Cyan, Gold, Pink, Green, Purple, Black, White)
+  const [themeColor, setThemeColor] = useState<"cyan" | "gold" | "pink" | "green" | "purple" | "black" | "white">("cyan");
 
   const themes = {
     cyan: {
@@ -39,7 +39,10 @@ export default function App() {
       textColor: "text-[#00fbfb]",
       shadow: "shadow-[0_0_12px_rgba(0,251,251,0.3)]",
       activeBg: "bg-[#00fbfb]/10",
-      ledBg: "bg-[#00fbfb]"
+      ledBg: "bg-[#00fbfb]",
+      appBg: "bg-[#080e18]",
+      sidebarBg: "bg-[#111722]/95",
+      bgGlow: "bg-[#00fbfb]"
     },
     gold: {
       primary: "#ffdb3c",
@@ -48,7 +51,10 @@ export default function App() {
       textColor: "text-[#ffdb3c]",
       shadow: "shadow-[0_0_12px_rgba(255,219,60,0.3)]",
       activeBg: "bg-[#ffdb3c]/10",
-      ledBg: "bg-[#ffdb3c]"
+      ledBg: "bg-[#ffdb3c]",
+      appBg: "bg-[#131109]",
+      sidebarBg: "bg-[#1a1711]/95",
+      bgGlow: "bg-[#ffdb3c]"
     },
     pink: {
       primary: "#ffb2ba",
@@ -57,7 +63,10 @@ export default function App() {
       textColor: "text-[#ffb2ba]",
       shadow: "shadow-[0_0_12px_rgba(255,178,186,0.3)]",
       activeBg: "bg-[#ffb2ba]/10",
-      ledBg: "bg-[#ffb2ba]"
+      ledBg: "bg-[#ffb2ba]",
+      appBg: "bg-[#140b10]",
+      sidebarBg: "bg-[#1d1118]/95",
+      bgGlow: "bg-[#ffb2ba]"
     },
     green: {
       primary: "#4ade80",
@@ -66,7 +75,10 @@ export default function App() {
       textColor: "text-[#4ade80]",
       shadow: "shadow-[0_0_12px_rgba(74,222,128,0.3)]",
       activeBg: "bg-[#4ade80]/10",
-      ledBg: "bg-[#4ade80]"
+      ledBg: "bg-[#4ade80]",
+      appBg: "bg-[#030d07]",
+      sidebarBg: "bg-[#0b140e]/95",
+      bgGlow: "bg-[#4ade80]"
     },
     purple: {
       primary: "#c084fc",
@@ -75,7 +87,34 @@ export default function App() {
       textColor: "text-[#c084fc]",
       shadow: "shadow-[0_0_12px_rgba(192,132,252,0.3)]",
       activeBg: "bg-[#c084fc]/10",
-      ledBg: "bg-[#c084fc]"
+      ledBg: "bg-[#c084fc]",
+      appBg: "bg-[#0b0716]",
+      sidebarBg: "bg-[#100c1e]/95",
+      bgGlow: "bg-[#c084fc]"
+    },
+    black: {
+      primary: "#ffffff",
+      glowColor: "rgba(255, 255, 255, 0.4)",
+      borderColor: "border-white",
+      textColor: "text-white",
+      shadow: "shadow-[0_0_12px_rgba(255,255,255,0.35)]",
+      activeBg: "bg-white/10",
+      ledBg: "bg-white",
+      appBg: "bg-[#000000]",
+      sidebarBg: "bg-[#0a0a0a]/95",
+      bgGlow: "bg-white"
+    },
+    white: {
+      primary: "#000000",
+      glowColor: "rgba(0, 0, 0, 0.4)",
+      borderColor: "border-black",
+      textColor: "text-black",
+      shadow: "shadow-[0_0_12px_rgba(0,0,0,0.2)]",
+      activeBg: "bg-black/10",
+      ledBg: "bg-black",
+      appBg: "bg-[#ffffff]",
+      sidebarBg: "bg-[#f1f5f9]/95",
+      bgGlow: "bg-black"
     }
   };
 
@@ -245,7 +284,7 @@ export default function App() {
 
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden selection:bg-[#00fbfb]/30 selection:text-white relative font-sans text-[#dde2f1] bg-[#080e18]">
+    <div className={`flex h-screen w-screen overflow-hidden selection:bg-[#00fbfb]/30 selection:text-white relative font-sans ${themeColor === "white" ? "text-slate-800" : "text-[#dde2f1]"} ${currentTheme.appBg} transition-colors duration-700`}>
       
       {/* Dynamic Ambient Background Glow controlled by Theme */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -267,7 +306,7 @@ export default function App() {
       {/* 1. Sidebar Navigation */}
       <aside 
         id="Sidebar" 
-        className="w-64 h-full py-6 bg-[#1a202a]/95 border-r border-white/10 z-20 flex-shrink-0 flex flex-col justify-between"
+        className={`w-64 h-full py-6 ${currentTheme.sidebarBg} border-r border-white/10 z-20 flex-shrink-0 flex flex-col justify-between transition-colors duration-700`}
       >
         <div>
           {/* Logo Section */}
@@ -900,6 +939,34 @@ export default function App() {
                       >
                         <span className="w-3.5 h-3.5 rounded-full bg-[#c084fc] shadow-[0_0_8px_#c084fc]" />
                         <span className="text-xs font-bold font-zh">{t.theme_purple || "幻影紫 (Ghostly Purple)"}</span>
+                      </button>
+
+                      {/* Black Theme */}
+                      <button 
+                        onClick={() => {
+                          setThemeColor("black");
+                          showToast((t.toast_theme_prefix || "主題已切換：") + (t.theme_black || "極致黑 (Ultimate Black)"));
+                        }}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all cursor-pointer ${
+                          themeColor === "black" ? "border-white bg-white/10 text-white" : "border-white/10 hover:border-white/20 text-[#b9cac9]"
+                        }`}
+                      >
+                        <span className="w-3.5 h-3.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)]" />
+                        <span className="text-xs font-bold font-zh">{t.theme_black || "極致黑 (Ultimate Black)"}</span>
+                      </button>
+
+                      {/* White Theme */}
+                      <button 
+                        onClick={() => {
+                          setThemeColor("white");
+                          showToast((t.toast_theme_prefix || "主題已切換：") + (t.theme_white || "極光白 (Polar White)"));
+                        }}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-all cursor-pointer ${
+                          themeColor === "white" ? "border-black bg-black/10 text-slate-900" : "border-white/10 hover:border-white/20 text-[#b9cac9]"
+                        }`}
+                      >
+                        <span className="w-3.5 h-3.5 rounded-full bg-black shadow-[0_0_8px_rgba(0,0,0,0.5)] border border-white/20" />
+                        <span className="text-xs font-bold font-zh">{t.theme_white || "極光白 (Polar White)"}</span>
                       </button>
                     </div>
 
