@@ -1,0 +1,6 @@
+{
+  "name": "AI Translator",
+  "description": "A high-contrast cyber-terminal translation dashboard featuring hardware mode toggles, screengrab shortcut simulation, and real-time AI translation powered by Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
